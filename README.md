@@ -10,18 +10,54 @@ A CLI tool that helps developers transfer AI agent configurations across differe
 - **Format Conversion**: Automatically convert configurations between different platform formats
 - **Backup & Restore**: Create backups of your agent configurations before making changes
 - **Dry Run Mode**: Preview changes without applying them
-- **Interactive Setup**: Step-by-step wizard for configuring transfers
+- **Single Executable**: No runtime dependencies required—just download and run
 
 ## Installation
 
+### Download Pre-built Binaries
+
+Download the latest release for your platform from the [Releases](https://github.com/nesjett/agent-setup-copier/releases) page:
+
+| Platform | Download |
+|----------|----------|
+| macOS (Apple Silicon) | `asc-macos-arm` |
+| macOS (Intel) | `asc-macos` |
+| Linux (x64) | `asc-linux` |
+| Windows (x64) | `asc-windows.exe` |
+
+After downloading, make it executable (macOS/Linux):
+
 ```bash
-npm install -g agent-setup-copier
+chmod +x asc-macos-arm
+sudo mv asc-macos-arm /usr/local/bin/asc
 ```
 
-Or use it directly with npx:
+### Build from Source
+
+Requires [Deno](https://deno.land/) 2.0 or later.
 
 ```bash
-npx agent-setup-copier
+# Clone the repository
+git clone https://github.com/nesjett/agent-setup-copier.git
+cd agent-setup-copier
+
+# Build for your current platform
+deno task build
+
+# Or build for all platforms
+deno task build:all
+```
+
+The compiled binaries will be in the `dist/` directory.
+
+### Run without Installing
+
+```bash
+# Run directly with Deno
+deno run --allow-read --allow-write --allow-env src/main.ts
+
+# Or use the dev task
+deno task dev
 ```
 
 ## Quick Start
@@ -34,12 +70,12 @@ Copy an agent's entire setup from one platform to another:
 asc copy --from copilot --to cursor
 ```
 
-### Interactive Mode
+### Detect Platforms
 
-Start the interactive wizard to guide you through the setup transfer:
+See which platforms are configured in your current project:
 
 ```bash
-asc
+asc list --detect
 ```
 
 ## Commands
@@ -53,7 +89,7 @@ asc copy [options]
 ```
 
 **Options:**
-- `--from <platform>` - Source platform (copilot, cursor, claude, custom)
+- `--from <platform>` - Source platform (copilot, cursor, claude, windsurf)
 - `--to <platform>` - Destination platform
 - `--config <path>` - Path to source configuration file
 - `--output <path>` - Where to save the transferred configuration
@@ -76,7 +112,7 @@ asc export <platform> [options]
 
 **Options:**
 - `--output <path>` - Where to save the exported configuration
-- `--format <format>` - Output format (json, yaml, env)
+- `--format <format>` - Output format (json, yaml)
 
 **Examples:**
 ```bash
@@ -103,24 +139,6 @@ asc import ./agent-config.json --to claude
 asc import ./cursor-setup.yaml --to cursor --merge
 ```
 
-### `validate`
-
-Validate a configuration file for correctness and compatibility.
-
-```bash
-asc validate <path> [options]
-```
-
-**Options:**
-- `--target <platform>` - Check compatibility with a specific platform
-- `--strict` - Apply stricter validation rules
-
-**Examples:**
-```bash
-asc validate ./my-agent.json
-asc validate ./config.json --target cursor --strict
-```
-
 ### `list`
 
 Show available platforms and supported configuration elements.
@@ -132,12 +150,15 @@ asc list [options]
 **Options:**
 - `--platforms` - List all supported platforms
 - `--elements` - List all transferable configuration elements
-- `--mappings` - Show platform-to-platform field mappings
+- `--mappings` - Show platform configuration file mappings
+- `--detect` - Detect platforms in current directory
 
 **Examples:**
 ```bash
-asc list --platforms
-asc list --elements --mappings
+asc list                  # Show all information
+asc list --platforms      # List supported platforms
+asc list --detect         # Detect configured platforms
+asc list --mappings       # Show file mappings
 ```
 
 ### `backup`
@@ -160,22 +181,22 @@ asc backup cursor --output ./backups/cursor-backup.json
 
 ## Supported Platforms
 
-- **GitHub Copilot** - Through VS Code settings
-- **Cursor** - Through `.cursor` directory configuration
-- **Claude** - Through Claude AI web interface exports
-- **Custom Platforms** - Define your own platform mappings
+| Platform | Configuration Files |
+|----------|---------------------|
+| **GitHub Copilot** | `.github/copilot-instructions.md` |
+| **Cursor** | `.cursor/rules/*.mdc`, `.cursorrules`, `.cursor/mcp.json` |
+| **Claude** | `CLAUDE.md`, `.claude/commands/*.md`, `.claude/mcp.json` |
+| **Windsurf** | `.windsurfrules`, `.windsurf/mcp.json` |
 
 ## Transferable Configuration Elements
 
-- Skills and custom commands
-- Tools and integrations
-- System rules and constraints
-- Prompts and instructions
-- Context and background information
-- Hotkeys and shortcuts
-- Extensions and plugins
-- Custom behaviors
-- API keys and credentials (encrypted)
+- **Instructions** - System prompts and instructions (CLAUDE.md, .cursorrules, etc.)
+- **Rules** - Platform-specific rules and constraints
+- **Skills** - Custom commands and skills
+- **Tools** - Tool configurations and integrations
+- **MCP Servers** - Model Context Protocol server configurations
+- **Context** - Additional context and settings
+- **Shortcuts** - Keyboard shortcuts and hotkeys
 
 ## Configuration Format
 
@@ -184,15 +205,33 @@ Configurations are stored in JSON format with the following structure:
 ```json
 {
   "version": "1.0.0",
-  "platform": "copilot",
+  "platform": "cursor",
   "timestamp": "2026-02-01T12:00:00Z",
   "config": {
-    "skills": [...],
-    "tools": [...],
-    "rules": [...],
-    "instructions": [...],
-    "context": {...},
-    "shortcuts": {...}
+    "skills": [
+      {
+        "name": "test",
+        "command": "/test",
+        "content": "Run all tests in the project"
+      }
+    ],
+    "rules": [
+      {
+        "name": "code-style",
+        "content": "Always use TypeScript strict mode",
+        "enabled": true
+      }
+    ],
+    "instructions": ["Use functional programming patterns"],
+    "mcpServers": [
+      {
+        "name": "filesystem",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path"]
+      }
+    ],
+    "context": {},
+    "shortcuts": {}
   }
 }
 ```
@@ -213,12 +252,6 @@ asc backup cursor --output ./backups/cursor-before-transfer.json
 asc copy --from copilot --to cursor
 ```
 
-### Validate Compatibility
-
-```bash
-asc validate ./my-copilot-config.json --target cursor --strict
-```
-
 ### Merge Configurations
 
 ```bash
@@ -227,49 +260,92 @@ asc import ./new-skills.json --to claude --merge
 
 ## API Usage
 
-Use `agent-setup-copier` programmatically in your own Node.js projects:
+Use `agent-setup-copier` programmatically in your Deno projects:
 
-```javascript
-const { AgentSetupCopier } = require('agent-setup-copier');
+```typescript
+import { getPlatformHandler } from './src/platforms/mod.ts';
 
-const copier = new AgentSetupCopier();
+// Get platform handlers
+const cursorHandler = getPlatformHandler('cursor');
+const claudeHandler = getPlatformHandler('claude');
 
-// Copy configuration
-const config = await copier.copy({
-  from: 'copilot',
-  to: 'cursor'
-});
+// Export from one platform
+const config = await cursorHandler.export();
 
-// Export configuration
-const exported = await copier.export('copilot');
-
-// Import configuration
-await copier.import('./config.json', { to: 'claude' });
-
-// Validate configuration
-const isValid = await copier.validate('./config.json', { target: 'cursor' });
+// Import to another platform
+await claudeHandler.import(config, false); // false = replace, true = merge
 ```
 
-## Configuration File
+## Development
 
-Create an `.ascrc.json` file in your project root to set default options:
+```bash
+# Run in development mode
+deno task dev
 
-```json
-{
-  "defaultSource": "copilot",
-  "defaultTarget": "cursor",
-  "backupBeforeTransfer": true,
-  "validateBeforeImport": true,
-  "outputDir": "./agent-configs"
-}
+# Run with arguments
+deno task dev copy --from cursor --to claude
+
+# Type check
+deno task check
+
+# Lint
+deno task lint
+
+# Format
+deno task fmt
+
+# Run tests
+deno task test
+```
+
+## Build Tasks
+
+| Task | Description |
+|------|-------------|
+| `deno task build` | Build for current platform |
+| `deno task build:all` | Build for all platforms |
+| `deno task build:linux` | Build for Linux x64 |
+| `deno task build:macos` | Build for macOS Intel |
+| `deno task build:macos-arm` | Build for macOS Apple Silicon |
+| `deno task build:windows` | Build for Windows x64 |
+
+## Project Structure
+
+```
+singleagentsetup-sas/
+├── deno.json              # Deno configuration with build tasks
+├── README.md              # Documentation
+├── .gitignore             # Git ignore rules
+├── dist/                  # Compiled executables (~71MB each)
+│   ├── asc                # macOS/Linux binary
+│   ├── asc-linux
+│   ├── asc-macos
+│   ├── asc-macos-arm
+│   └── asc-windows.exe
+└── src/
+    ├── main.ts            # CLI entry point
+    ├── types.ts           # TypeScript interfaces
+    ├── commands/          # CLI commands
+    │   ├── backup.ts
+    │   ├── copy.ts
+    │   ├── export.ts
+    │   ├── import.ts
+    │   └── list.ts
+    ├── platforms/         # Platform handlers
+    │   ├── base.ts
+    │   ├── cursor.ts
+    │   ├── claude.ts
+    │   ├── copilot.ts
+    │   └── windsurf.ts
+    └── utils/
+        └── colors.ts      # Terminal colors
 ```
 
 ## Security Considerations
 
-- **Credentials**: API keys and sensitive credentials are encrypted when stored
 - **Backup**: Always create a backup before transferring critical configurations
-- **Permissions**: Ensure you have permission to copy configurations from your source platform
-- **Validation**: Validate configurations before importing to prevent errors
+- **Permissions**: Ensure you have write permissions in the target directories
+- **File Safety**: The tool only reads and writes configuration files in standard locations
 
 ## Troubleshooting
 
@@ -279,14 +355,6 @@ Ensure you're in the correct directory or provide the full path to your configur
 
 ```bash
 asc export copilot --output /full/path/to/config.json
-```
-
-### Compatibility Issues
-
-Use the validate command to check for compatibility:
-
-```bash
-asc validate ./config.json --target cursor --strict
 ```
 
 ### Import Fails

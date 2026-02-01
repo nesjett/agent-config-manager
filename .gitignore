@@ -1,0 +1,26 @@
+# Build output
+dist/
+
+# Deno cache
+.deno/
+
+# Lock file (optional - can be committed for reproducible builds)
+# deno.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backups created by the tool
+*-backup*.json
+
+# Environment files
+.env
+.env.local
