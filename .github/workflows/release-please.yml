@@ -1,0 +1,75 @@
+name: Release Please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Release Please
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  build-and-upload:
+    name: Build and Upload Assets
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            artifact_name: asc-linux
+          - target: x86_64-apple-darwin
+            artifact_name: asc-macos
+          - target: aarch64-apple-darwin
+            artifact_name: asc-macos-arm
+          - target: x86_64-pc-windows-msvc
+            artifact_name: asc-windows.exe
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+          cache: true
+
+      - name: Install dependencies
+        run: deno install
+
+      - name: Build binary
+        run: |
+          deno compile \
+            --allow-read --allow-write --allow-env \
+            --target ${{ matrix.target }} \
+            --output dist/${{ matrix.artifact_name }} \
+            src/main.ts
+
+      - name: Generate checksum
+        working-directory: dist
+        run: |
+          sha256sum ${{ matrix.artifact_name }} > ${{ matrix.artifact_name }}.sha256
+
+      - name: Upload release assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ needs.release-please.outputs.tag_name }} \
+            dist/${{ matrix.artifact_name }} \
+            dist/${{ matrix.artifact_name }}.sha256
