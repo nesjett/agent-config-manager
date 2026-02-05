@@ -40,7 +40,7 @@ ${colors.bold('Examples:')}
   acm backup cursor --timestamp
 
 ${colors.bold('Documentation:')}
-  https://github.com/nesjett/agent-setup-copier
+  https://github.com/nesjett/agent-config-manager
 `;
 
 export async function main(): Promise<void> {

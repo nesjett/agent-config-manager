@@ -32,7 +32,7 @@ pre-built binary.
 
 **Pre-built Binaries**\
 Download from
-[Releases](https://github.com/nesjett/agent-setup-copier/releases), simplify
+[Releases](https://github.com/nesjett/agent-config-manager/releases), simplify
 make it executable:
 
 ```bash
@@ -43,8 +43,8 @@ alias acm="./acm"
 **From Source**
 
 ```bash
-git clone https://github.com/nesjett/agent-setup-copier.git
-cd agent-setup-copier
+git clone https://github.com/nesjett/agent-config-manager.git
+cd agent-config-manager
 deno task build
 ```
 
@@ -157,7 +157,7 @@ acm import ./new-skills.json --to claude --merge
 
 ## 🧩 API Usage
 
-Use `agent-setup-copier` programmatically in your Deno projects:
+Use `agent-config-manager` programmatically in your Deno projects:
 
 ```typescript
 import { getPlatformHandler } from './src/platforms/mod.ts';
