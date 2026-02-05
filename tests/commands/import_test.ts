@@ -4,7 +4,6 @@ import { importCommand } from '../../src/commands/import.ts';
 import {
   createSampleConfig,
   ExitError,
-  readFixture,
   spyConsole,
   stubExit,
   withTempDir,

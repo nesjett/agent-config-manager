@@ -1,6 +1,5 @@
 import { assert, assertEquals, assertRejects } from '@std/assert';
 import { BasePlatformHandler } from '../../src/platforms/base.ts';
-import type { AgentConfig, Platform } from '../../src/types.ts';
 import { withTempDir, writeFixture } from '../_test_helpers.ts';
 
 // Create a concrete test class

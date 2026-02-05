@@ -1,7 +1,7 @@
 import { assert, assertStringIncludes } from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { listCommand } from '../../src/commands/list.ts';
-import { spyConsole, withTempDir, writeFixture } from '../_test_helpers.ts';
+import { spyConsole, withTempDir } from '../_test_helpers.ts';
 
 Deno.test('listCommand - --help prints help', async () => {
   const consoleSpy = spyConsole();
