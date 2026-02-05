@@ -7,6 +7,7 @@ import {
   listCommand,
 } from './commands/mod.ts';
 import { colors } from './utils/colors.ts';
+import { checkGitRepositoryWithPrompt } from './utils/git.ts';
 
 const VERSION = '0.1.0';
 
@@ -68,6 +69,15 @@ async function main(): Promise<void> {
 
   const command = String(parsed._[0]);
   const commandArgs = args.slice(1);
+
+  // Check git repository for commands that modify files
+  const modifyingCommands = ['copy', 'import'];
+  if (modifyingCommands.includes(command)) {
+    const shouldContinue = await checkGitRepositoryWithPrompt();
+    if (!shouldContinue) {
+      Deno.exit(1);
+    }
+  }
 
   // Route to command handlers
   switch (command) {
