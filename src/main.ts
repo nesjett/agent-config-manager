@@ -42,7 +42,7 @@ ${colors.bold('Documentation:')}
   https://github.com/nesjett/agent-setup-copier
 `;
 
-async function main(): Promise<void> {
+export async function main(): Promise<void> {
   const args = Deno.args;
 
   // Parse top-level args
