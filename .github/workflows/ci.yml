@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  ci:
+    name: Lint, Test & Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+          cache: true
+
+      - name: Install dependencies
+        run: deno install
+
+      - name: Check formatting
+        run: deno fmt --check
+
+      - name: Lint
+        run: deno lint
+
+      - name: Type check
+        run: deno check src/main.ts
+
+      - name: Run tests with coverage
+        run: deno test --allow-read --allow-write --allow-run --allow-env --coverage=coverage/
+
+      - name: Generate LCOV report
+        run: deno coverage coverage/ --lcov > coverage/lcov.info
+
+      - name: Install LCOV
+        run: sudo apt-get install -y lcov
+
+      - name: Report coverage on PR
+        if: github.event_name == 'pull_request'
+        uses: zgosalvez/github-actions-report-lcov@v4
+        with:
+          coverage-files: coverage/lcov.info
+          minimum-coverage: 80
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          update-comment: true
