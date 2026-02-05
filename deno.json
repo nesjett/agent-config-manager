@@ -1,6 +1,6 @@
 {
   "name": "@nesjett/agent-setup-copier",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "exports": "./src/main.ts",
   "tasks": {
     "dev": "deno run --allow-read --allow-write --allow-env src/main.ts",
@@ -37,7 +37,9 @@
   },
   "lint": {
     "rules": {
-      "tags": ["recommended"]
+      "tags": [
+        "recommended"
+      ]
     }
   }
 }
