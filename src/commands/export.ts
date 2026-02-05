@@ -82,7 +82,7 @@ export async function exportCommand(args: string[]): Promise<void> {
 
 function printExportHelp(): void {
   console.log(`
-${colors.bold('Usage:')} asc export <platform> [options]
+${colors.bold('Usage:')} acm export <platform> [options]
 
 ${colors.bold('Description:')}
   Export agent configuration from a platform.
@@ -99,8 +99,8 @@ ${colors.bold('Supported Platforms:')}
   ${getSupportedPlatforms().join(', ')}
 
 ${colors.bold('Examples:')}
-  asc export cursor
-  asc export copilot --output ./copilot-config.json
-  asc export claude --format yaml
+  acm export cursor
+  acm export copilot --output ./copilot-config.json
+  acm export claude --format yaml
 `);
 }

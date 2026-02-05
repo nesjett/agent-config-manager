@@ -83,7 +83,7 @@ export async function backupCommand(args: string[]): Promise<void> {
 
 function printBackupHelp(): void {
   console.log(`
-${colors.bold('Usage:')} asc backup <platform> [options]
+${colors.bold('Usage:')} acm backup <platform> [options]
 
 ${colors.bold('Description:')}
   Create a backup of platform configuration.
@@ -100,8 +100,8 @@ ${colors.bold('Supported Platforms:')}
   ${getSupportedPlatforms().join(', ')}
 
 ${colors.bold('Examples:')}
-  asc backup cursor
-  asc backup copilot --timestamp
-  asc backup claude --output ./backups/claude-backup.json
+  acm backup cursor
+  acm backup copilot --timestamp
+  acm backup claude --output ./backups/claude-backup.json
 `);
 }

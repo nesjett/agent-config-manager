@@ -13,13 +13,13 @@ import denoConfig from '../deno.json' with { type: 'json' };
 const VERSION: string = denoConfig.version;
 
 const BANNER = `
-${colors.bold(colors.cyan('Agent Setup Copier'))} ${colors.dim(`v${VERSION}`)}
+${colors.bold(colors.cyan('Agent Config Manager'))} ${colors.dim(`v${VERSION}`)}
 ${colors.dim('Transfer AI agent configurations across platforms')}
 `;
 
 const HELP = `
 ${BANNER}
-${colors.bold('Usage:')} asc <command> [options]
+${colors.bold('Usage:')} acm <command> [options]
 
 ${colors.bold('Commands:')}
   copy       Copy configuration from one platform to another
@@ -33,11 +33,11 @@ ${colors.bold('Options:')}
   -v, --version    Show version number
 
 ${colors.bold('Examples:')}
-  asc copy --from copilot --to cursor
-  asc export cursor --output ./config.json
-  asc import ./config.json --to claude
-  asc list --detect
-  asc backup cursor --timestamp
+  acm copy --from copilot --to cursor
+  acm export cursor --output ./config.json
+  acm import ./config.json --to claude
+  acm list --detect
+  acm backup cursor --timestamp
 
 ${colors.bold('Documentation:')}
   https://github.com/nesjett/agent-setup-copier

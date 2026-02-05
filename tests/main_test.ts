@@ -65,7 +65,7 @@ Deno.test('main - copy command routes correctly', async () => {
       '\n',
     );
     assertStringIncludes(output, 'Usage:');
-    assertStringIncludes(output, 'asc copy');
+    assertStringIncludes(output, 'acm copy');
   } finally {
     argsStub.restore();
     gitStub.restore();
@@ -81,7 +81,7 @@ Deno.test('main - export command routes', async () => {
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
       '\n',
     );
-    assertStringIncludes(output, 'asc export');
+    assertStringIncludes(output, 'acm export');
   } finally {
     argsStub.restore();
     consoleSpy.restore();
@@ -97,7 +97,7 @@ Deno.test('main - import command routes (git check passes)', async () => {
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
       '\n',
     );
-    assertStringIncludes(output, 'asc import');
+    assertStringIncludes(output, 'acm import');
   } finally {
     argsStub.restore();
     gitStub.restore();
@@ -139,7 +139,7 @@ Deno.test('main - list command routes', async () => {
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
       '\n',
     );
-    assertStringIncludes(output, 'asc list');
+    assertStringIncludes(output, 'acm list');
   } finally {
     argsStub.restore();
     consoleSpy.restore();
@@ -154,7 +154,7 @@ Deno.test('main - backup command routes', async () => {
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
       '\n',
     );
-    assertStringIncludes(output, 'asc backup');
+    assertStringIncludes(output, 'acm backup');
   } finally {
     argsStub.restore();
     consoleSpy.restore();
@@ -217,7 +217,7 @@ Deno.test('main - non-modifying commands skip git check', async () => {
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
       '\n',
     );
-    assertStringIncludes(output, 'asc list');
+    assertStringIncludes(output, 'acm list');
   } finally {
     argsStub.restore();
     consoleSpy.restore();

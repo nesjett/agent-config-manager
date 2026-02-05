@@ -94,7 +94,7 @@ export async function importCommand(args: string[]): Promise<void> {
 
 function printImportHelp(): void {
   console.log(`
-${colors.bold('Usage:')} asc import <path> [options]
+${colors.bold('Usage:')} acm import <path> [options]
 
 ${colors.bold('Description:')}
   Import agent configuration into a platform.
@@ -112,8 +112,8 @@ ${colors.bold('Supported Platforms:')}
   ${getSupportedPlatforms().join(', ')}
 
 ${colors.bold('Examples:')}
-  asc import ./config.json --to cursor
-  asc import ./config.yaml --to claude --merge
-  asc import ./config.json --to copilot --validate
+  acm import ./config.json --to cursor
+  acm import ./config.yaml --to claude --merge
+  acm import ./config.json --to copilot --validate
 `);
 }

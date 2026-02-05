@@ -1,4 +1,4 @@
-# Contributing to Agent Setup Copier (ASC)
+# Contributing to Agent Config Manager (ACM)
 
 Thanks for taking the time to contribute! This project is a Deno (2.x) CLI that
 transfers AI agent configuration between platforms.

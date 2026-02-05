@@ -95,7 +95,7 @@ export async function listCommand(args: string[]): Promise<void> {
 
 function printListHelp(): void {
   console.log(`
-${colors.bold('Usage:')} asc list [options]
+${colors.bold('Usage:')} acm list [options]
 
 ${colors.bold('Description:')}
   Show available platforms and configuration information.
@@ -108,9 +108,9 @@ ${colors.bold('Options:')}
   -h, --help               Show this help message
 
 ${colors.bold('Examples:')}
-  asc list
-  asc list --platforms
-  asc list --detect
-  asc list --mappings
+  acm list
+  acm list --platforms
+  acm list --detect
+  acm list --mappings
 `);
 }

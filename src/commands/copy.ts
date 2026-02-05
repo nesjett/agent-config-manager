@@ -155,7 +155,7 @@ function getConfigStats(config: AgentConfig): string {
 
 function printCopyHelp(): void {
   console.log(`
-${colors.bold('Usage:')} asc copy [options]
+${colors.bold('Usage:')} acm copy [options]
 
 ${colors.bold('Description:')}
   Transfer agent configuration from one platform to another.
@@ -173,8 +173,8 @@ ${colors.bold('Supported Platforms:')}
   ${getSupportedPlatforms().join(', ')}
 
 ${colors.bold('Examples:')}
-  asc copy --from copilot --to cursor
-  asc copy --from cursor --to claude --dry-run
-  asc copy --config ./saved-config.json --to windsurf
+  acm copy --from copilot --to cursor
+  acm copy --from cursor --to claude --dry-run
+  acm copy --config ./saved-config.json --to windsurf
 `);
 }

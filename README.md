@@ -1,4 +1,4 @@
-# 🤖 Agent Setup Copier (ASC)
+# 🤖 Agent Config Manager (ACM)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Deno](https://img.shields.io/badge/deno-v2.0-black)
@@ -36,8 +36,8 @@ Download from
 make it executable:
 
 ```bash
-chmod +x asc
-alias asc="./asc"
+chmod +x acm
+alias acm="./acm"
 ```
 
 **From Source**
@@ -59,12 +59,12 @@ deno task dev -- copy --from copilot --to cursor
 Copy an agent's setup from one platform to another:
 
 ```bash
-asc copy --from copilot --to cursor
+acm copy --from copilot --to cursor
 ```
 
 ## 🧰 Commands
 
-Run `asc --help` for a list of commands, or `asc <command> --help` for detailed
+Run `acm --help` for a list of commands, or `acm <command> --help` for detailed
 usage.
 
 Common commands:
@@ -138,21 +138,21 @@ Configurations are stored in JSON format with the following structure:
 ### Transfer from Copilot to Cursor
 
 ```bash
-asc copy --from copilot --to cursor --output ./cursor-config.json
-asc import ./cursor-config.json --to cursor
+acm copy --from copilot --to cursor --output ./cursor-config.json
+acm import ./cursor-config.json --to cursor
 ```
 
 ### Create a Backup Before Transfer
 
 ```bash
-asc backup cursor --output ./backups/cursor-before-transfer.json
-asc copy --from copilot --to cursor
+acm backup cursor --output ./backups/cursor-before-transfer.json
+acm copy --from copilot --to cursor
 ```
 
 ### Merge Configurations
 
 ```bash
-asc import ./new-skills.json --to claude --merge
+acm import ./new-skills.json --to claude --merge
 ```
 
 ## 🧩 API Usage
@@ -221,7 +221,7 @@ Ensure you're in the correct directory or provide the full path to your
 configuration file:
 
 ```bash
-asc export copilot --output /full/path/to/config.json
+acm export copilot --output /full/path/to/config.json
 ```
 
 ### Import Fails
@@ -229,7 +229,7 @@ asc export copilot --output /full/path/to/config.json
 Try merging instead of replacing:
 
 ```bash
-asc import ./config.json --to cursor --merge
+acm import ./config.json --to cursor --merge
 ```
 
 ## 🤝 Contributing

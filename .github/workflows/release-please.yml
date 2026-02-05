@@ -33,13 +33,13 @@ jobs:
       matrix:
         include:
           - target: x86_64-unknown-linux-gnu
-            artifact_name: asc-linux
+            artifact_name: acm-linux
           - target: x86_64-apple-darwin
-            artifact_name: asc-macos
+            artifact_name: acm-macos
           - target: aarch64-apple-darwin
-            artifact_name: asc-macos-arm
+            artifact_name: acm-macos-arm
           - target: x86_64-pc-windows-msvc
-            artifact_name: asc-windows.exe
+            artifact_name: acm-windows.exe
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
