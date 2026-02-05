@@ -1,5 +1,5 @@
 import { join } from '@std/path';
-import type { AgentConfig, Rule, Skill } from '../types.ts';
+import type { AgentConfig, Skill } from '../types.ts';
 import { BasePlatformHandler } from './base.ts';
 
 /**

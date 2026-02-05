@@ -1,6 +1,6 @@
 import { parseArgs } from '@std/cli';
 import { detectPlatforms, getSupportedPlatforms } from '../platforms/mod.ts';
-import { colors, log } from '../utils/colors.ts';
+import { colors } from '../utils/colors.ts';
 
 /**
  * List command - shows available platforms and configuration elements
