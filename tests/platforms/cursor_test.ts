@@ -1,11 +1,11 @@
-import { assertEquals, assert, assertStringIncludes } from '@std/assert';
+import { assert, assertEquals, assertStringIncludes } from '@std/assert';
 import { CursorHandler } from '../../src/platforms/cursor.ts';
 import {
+  createSampleConfig,
+  fixtureExists,
+  readFixture,
   withTempDir,
   writeFixture,
-  readFixture,
-  fixtureExists,
-  createSampleConfig,
 } from '../_test_helpers.ts';
 
 Deno.test('CursorHandler - detect returns true when .cursor dir exists', async () => {

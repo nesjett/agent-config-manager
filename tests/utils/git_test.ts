@@ -1,8 +1,8 @@
 import { assertEquals } from '@std/assert';
 import { stub } from '@std/testing/mock';
 import {
-  isGitRepository,
   checkGitRepositoryWithPrompt,
+  isGitRepository,
 } from '../../src/utils/git.ts';
 import { stubPrompt } from '../_test_helpers.ts';
 
@@ -13,7 +13,7 @@ Deno.test('isGitRepository returns true when git command succeeds', async () => 
     () =>
       ({
         output: () => Promise.resolve({ success: true }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
 
   try {
@@ -31,7 +31,7 @@ Deno.test('isGitRepository returns false when git command fails', async () => {
     () =>
       ({
         output: () => Promise.resolve({ success: false }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
 
   try {
@@ -62,7 +62,7 @@ Deno.test('checkGitRepositoryWithPrompt returns true when in git repo', async ()
     () =>
       ({
         output: () => Promise.resolve({ success: true }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
 
   try {
@@ -80,7 +80,7 @@ Deno.test('checkGitRepositoryWithPrompt returns true when user confirms', async 
     () =>
       ({
         output: () => Promise.resolve({ success: false }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
   const promptStubbed = stubPrompt('y');
 
@@ -100,7 +100,7 @@ Deno.test('checkGitRepositoryWithPrompt returns false when user enters "n"', asy
     () =>
       ({
         output: () => Promise.resolve({ success: false }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
   const promptStubbed = stubPrompt('n');
 
@@ -120,7 +120,7 @@ Deno.test('checkGitRepositoryWithPrompt returns false when prompt returns null',
     () =>
       ({
         output: () => Promise.resolve({ success: false }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
   const promptStubbed = stubPrompt(null);
 
@@ -140,7 +140,7 @@ Deno.test('checkGitRepositoryWithPrompt returns false on empty response', async 
     () =>
       ({
         output: () => Promise.resolve({ success: false }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
   const promptStubbed = stubPrompt('');
 

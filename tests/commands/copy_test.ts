@@ -1,15 +1,15 @@
-import { assertStringIncludes, assertRejects, assertEquals } from '@std/assert';
+import { assertEquals, assertRejects, assertStringIncludes } from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { copyCommand } from '../../src/commands/copy.ts';
 import {
-  withTempDir,
-  writeFixture,
-  readFixture,
+  createSampleConfig,
+  ExitError,
   fixtureExists,
+  readFixture,
   spyConsole,
   stubExit,
-  ExitError,
-  createSampleConfig,
+  withTempDir,
+  writeFixture,
 } from '../_test_helpers.ts';
 
 Deno.test('copyCommand - --help prints help and returns', async () => {
@@ -46,7 +46,7 @@ Deno.test('copyCommand - unknown source platform exits', async () => {
   try {
     await assertRejects(
       () => copyCommand(['--from', 'invalid', '--to', 'cursor']),
-      ExitError
+      ExitError,
     );
   } finally {
     exitStub.restore();
@@ -58,7 +58,7 @@ Deno.test('copyCommand - unknown target platform exits', async () => {
   try {
     await assertRejects(
       () => copyCommand(['--from', 'cursor', '--to', 'invalid']),
-      ExitError
+      ExitError,
     );
   } finally {
     exitStub.restore();
@@ -103,7 +103,7 @@ Deno.test('copyCommand - --config with bad file exits', async () => {
             '--config',
             `${dir}/nonexistent.json`,
           ]),
-        ExitError
+        ExitError,
       );
     } finally {
       exitStub.restore();
@@ -213,7 +213,7 @@ Deno.test('copyCommand - --output write failure exits', async () => {
             '--output',
             '/bad/path/out.json',
           ]),
-        ExitError
+        ExitError,
       );
     } finally {
       exitStub.restore();

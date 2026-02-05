@@ -4,30 +4,44 @@
 ![Deno](https://img.shields.io/badge/deno-v2.0-black)
 ![Platform](https://img.shields.io/badge/platform-macos%20|%20linux%20|%20windows-lightgrey)
 
-A CLI tool that helps developers transfer AI agent configurations across different platforms. Copy skills, tools, rules, instructions, and other agent setup configurations from one agent or platform to another—whether that's from GitHub Copilot to Cursor, Claude, or any other AI assistant.
+A CLI tool that helps developers transfer AI agent configurations across
+different platforms. Copy skills, tools, rules, instructions, and other agent
+setup configurations from one agent or platform to another—whether that's from
+GitHub Copilot to Cursor, Claude, or any other AI assistant.
 
 ## ✨ Features
 
-- 🌍 **Cross-Platform Support**: Transfer agent configurations between different AI assistants and IDEs
-- 🧰 **Comprehensive Configuration Transfer**: Copy skills, tools, rules, instructions, context, and system prompts
-- ✅ **Configuration Validation**: Verify compatibility and identify potential issues before transfer
-- 🔄 **Format Conversion**: Automatically convert configurations between different platform formats
-- 💾 **Backup & Restore**: Create backups of your agent configurations before making changes
+- 🌍 **Cross-Platform Support**: Transfer agent configurations between different
+  AI assistants and IDEs
+- 🧰 **Comprehensive Configuration Transfer**: Copy skills, tools, rules,
+  instructions, context, and system prompts
+- ✅ **Configuration Validation**: Verify compatibility and identify potential
+  issues before transfer
+- 🔄 **Format Conversion**: Automatically convert configurations between
+  different platform formats
+- 💾 **Backup & Restore**: Create backups of your agent configurations before
+  making changes
 - 🧪 **Dry Run Mode**: Preview changes without applying them
-- 📦 **Single Executable**: No runtime dependencies required—just download and run
+- 📦 **Single Executable**: No runtime dependencies required—just download and
+  run
 
 ## 📦 Installation
 
-Requires [Deno](https://deno.land/) 2.0+ to build from source, or download a pre-built binary.
+Requires [Deno](https://deno.land/) 2.0+ to build from source, or download a
+pre-built binary.
 
-**Pre-built Binaries**  
-Download from [Releases](https://github.com/nesjett/agent-setup-copier/releases), simplify make it executable:
+**Pre-built Binaries**\
+Download from
+[Releases](https://github.com/nesjett/agent-setup-copier/releases), simplify
+make it executable:
+
 ```bash
 chmod +x asc
 alias asc="./asc"
 ```
 
 **From Source**
+
 ```bash
 git clone https://github.com/nesjett/agent-setup-copier.git
 cd agent-setup-copier
@@ -35,6 +49,7 @@ deno task build
 ```
 
 **Run Directly**
+
 ```bash
 deno task dev -- copy --from copilot --to cursor
 ```
@@ -49,9 +64,11 @@ asc copy --from copilot --to cursor
 
 ## 🧰 Commands
 
-Run `asc --help` for a list of commands, or `asc <command> --help` for detailed usage.
+Run `asc --help` for a list of commands, or `asc <command> --help` for detailed
+usage.
 
 Common commands:
+
 - `copy`: Transfer configuration between platforms
 - `export`: Export configuration to a file
 - `import`: Import configuration from a file
@@ -60,16 +77,17 @@ Common commands:
 
 ## 🧩 Supported Platforms
 
-| Platform | Configuration Files |
-|----------|---------------------|
-| **GitHub Copilot** | `.github/copilot-instructions.md` |
-| **Cursor** | `.cursor/rules/*.mdc`, `.cursorrules`, `.cursor/mcp.json` |
-| **Claude** | `CLAUDE.md`, `.claude/commands/*.md`, `.claude/mcp.json` |
-| **Windsurf** | `.windsurfrules`, `.windsurf/mcp.json` |
+| Platform           | Configuration Files                                       |
+| ------------------ | --------------------------------------------------------- |
+| **GitHub Copilot** | `.github/copilot-instructions.md`                         |
+| **Cursor**         | `.cursor/rules/*.mdc`, `.cursorrules`, `.cursor/mcp.json` |
+| **Claude**         | `CLAUDE.md`, `.claude/commands/*.md`, `.claude/mcp.json`  |
+| **Windsurf**       | `.windsurfrules`, `.windsurf/mcp.json`                    |
 
 ## 🔁 Transferable Configuration Elements
 
-- **Instructions** - System prompts and instructions (CLAUDE.md, .cursorrules, etc.)
+- **Instructions** - System prompts and instructions (CLAUDE.md, .cursorrules,
+  etc.)
 - **Rules** - Platform-specific rules and constraints
 - **Skills** - Custom commands and skills
 - **Tools** - Tool configurations and integrations
@@ -179,26 +197,28 @@ deno task test
 
 ## 🏗️ Build Tasks
 
-| Task | Description |
-|------|-------------|
-| `deno task build` | Build for current platform |
-| `deno task build:all` | Build for all platforms |
-| `deno task build:linux` | Build for Linux x64 |
-| `deno task build:macos` | Build for macOS Intel |
+| Task                        | Description                   |
+| --------------------------- | ----------------------------- |
+| `deno task build`           | Build for current platform    |
+| `deno task build:all`       | Build for all platforms       |
+| `deno task build:linux`     | Build for Linux x64           |
+| `deno task build:macos`     | Build for macOS Intel         |
 | `deno task build:macos-arm` | Build for macOS Apple Silicon |
-| `deno task build:windows` | Build for Windows x64 |
+| `deno task build:windows`   | Build for Windows x64         |
 
 ## 🔒 Security Considerations
 
 - **Backup**: Always create a backup before transferring critical configurations
 - **Permissions**: Ensure you have write permissions in the target directories
-- **File Safety**: The tool only reads and writes configuration files in standard locations
+- **File Safety**: The tool only reads and writes configuration files in
+  standard locations
 
 ## 🩺 Troubleshooting
 
 ### Configuration Not Found
 
-Ensure you're in the correct directory or provide the full path to your configuration file:
+Ensure you're in the correct directory or provide the full path to your
+configuration file:
 
 ```bash
 asc export copilot --output /full/path/to/config.json

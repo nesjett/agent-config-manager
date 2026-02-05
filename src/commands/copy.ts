@@ -58,7 +58,11 @@ export async function copyCommand(args: string[]): Promise<void> {
   }
 
   console.log(
-    colors.bold(`\nCopying configuration from ${colors.cyan(options.from)} to ${colors.cyan(options.to)}...\n`)
+    colors.bold(
+      `\nCopying configuration from ${colors.cyan(options.from)} to ${
+        colors.cyan(options.to)
+      }...\n`,
+    ),
   );
 
   // Export from source
@@ -79,7 +83,9 @@ export async function copyCommand(args: string[]): Promise<void> {
     // Detect and export from source platform
     const detected = await sourceHandler.detect();
     if (!detected) {
-      log.warn(`No ${options.from} configuration detected in current directory`);
+      log.warn(
+        `No ${options.from} configuration detected in current directory`,
+      );
     }
     config = await sourceHandler.export();
     log.success(`Exported configuration from ${options.from}`);
@@ -120,7 +126,9 @@ export async function copyCommand(args: string[]): Promise<void> {
   await targetHandler.import(config, false);
   log.success(`Imported configuration to ${options.to}`);
 
-  console.log(colors.bold(colors.green('\n✓ Configuration copied successfully!\n')));
+  console.log(
+    colors.bold(colors.green('\n✓ Configuration copied successfully!\n')),
+  );
 }
 
 function getConfigStats(config: AgentConfig): string {

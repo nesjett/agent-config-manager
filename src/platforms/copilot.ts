@@ -36,19 +36,31 @@ export class CopilotHandler extends BasePlatformHandler {
     }
 
     // Try to read VS Code settings for Copilot configuration
-    const vscodeSettingsPath = join(this.getRootPath(), '.vscode', 'settings.json');
+    const vscodeSettingsPath = join(
+      this.getRootPath(),
+      '.vscode',
+      'settings.json',
+    );
     if (await this.fileExists(vscodeSettingsPath)) {
-      const settings = await this.readJsonFile<Record<string, unknown>>(vscodeSettingsPath);
+      const settings = await this.readJsonFile<Record<string, unknown>>(
+        vscodeSettingsPath,
+      );
       if (settings) {
         // Extract Copilot-related settings
         const copilotSettings: Record<string, unknown> = {};
         for (const [key, value] of Object.entries(settings)) {
-          if (key.toLowerCase().includes('copilot') || key.toLowerCase().includes('github')) {
+          if (
+            key.toLowerCase().includes('copilot') ||
+            key.toLowerCase().includes('github')
+          ) {
             copilotSettings[key] = value;
           }
         }
         if (Object.keys(copilotSettings).length > 0) {
-          config.config.context = { ...config.config.context, vscodeSettings: copilotSettings };
+          config.config.context = {
+            ...config.config.context,
+            vscodeSettings: copilotSettings,
+          };
         }
       }
     }

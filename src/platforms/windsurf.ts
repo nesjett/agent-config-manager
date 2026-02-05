@@ -41,10 +41,13 @@ export class WindsurfHandler extends BasePlatformHandler {
     const cascadePath = join(this.getConfigPath(), 'cascade.json');
     if (await this.fileExists(cascadePath)) {
       const cascadeConfig = await this.readJsonFile<Record<string, unknown>>(
-        cascadePath
+        cascadePath,
       );
       if (cascadeConfig) {
-        config.config.context = { ...config.config.context, cascade: cascadeConfig };
+        config.config.context = {
+          ...config.config.context,
+          cascade: cascadeConfig,
+        };
       }
     }
 
@@ -64,7 +67,7 @@ export class WindsurfHandler extends BasePlatformHandler {
             command: server.command,
             args: server.args,
             env: server.env,
-          })
+          }),
         );
       }
     }
@@ -127,7 +130,7 @@ export class WindsurfHandler extends BasePlatformHandler {
       if (merge && (await this.fileExists(mcpConfigPath))) {
         existingMcp =
           (await this.readJsonFile<{ mcpServers: Record<string, unknown> }>(
-            mcpConfigPath
+            mcpConfigPath,
           )) || existingMcp;
       }
 

@@ -32,12 +32,20 @@ export async function checkGitRepositoryWithPrompt(): Promise<boolean> {
   // Not in a git repository - warn and prompt
   console.log('');
   log.warn('You are not in a git repository!');
-  console.log(colors.yellow('  It is recommended to use version control when modifying agent configurations.'));
-  console.log(colors.yellow('  This allows you to track changes and revert if needed.'));
+  console.log(
+    colors.yellow(
+      '  It is recommended to use version control when modifying agent configurations.',
+    ),
+  );
+  console.log(
+    colors.yellow('  This allows you to track changes and revert if needed.'),
+  );
   console.log('');
 
   // Prompt for confirmation
-  const response = prompt(colors.bold('Do you want to continue anyway? (y/N): '));
+  const response = prompt(
+    colors.bold('Do you want to continue anyway? (y/N): '),
+  );
 
   if (!response || response.toLowerCase() !== 'y') {
     log.error('Operation cancelled');

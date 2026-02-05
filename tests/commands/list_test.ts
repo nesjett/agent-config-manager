@@ -1,7 +1,7 @@
 import { assert, assertStringIncludes } from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { listCommand } from '../../src/commands/list.ts';
-import { withTempDir, writeFixture, spyConsole } from '../_test_helpers.ts';
+import { spyConsole, withTempDir, writeFixture } from '../_test_helpers.ts';
 
 Deno.test('listCommand - --help prints help', async () => {
   const consoleSpy = spyConsole();
@@ -22,7 +22,7 @@ Deno.test('listCommand - no flags shows all sections', async () => {
 
       // Should show all 4 sections
       const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-        '\n'
+        '\n',
       );
       assertStringIncludes(output, 'Supported Platforms');
       assertStringIncludes(output, 'Detected Platforms');
@@ -40,7 +40,7 @@ Deno.test('listCommand - --platforms only', async () => {
     await listCommand(['--platforms']);
 
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'Supported Platforms');
     assertStringIncludes(output, 'cursor');
@@ -57,7 +57,7 @@ Deno.test('listCommand - --detect with no platforms', async () => {
       await listCommand(['--detect']);
 
       const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-        '\n'
+        '\n',
       );
       assertStringIncludes(output, 'No platforms detected');
     } finally {
@@ -75,7 +75,7 @@ Deno.test('listCommand - --detect with platforms found', async () => {
       await listCommand(['--detect']);
 
       const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-        '\n'
+        '\n',
       );
       assertStringIncludes(output, 'cursor');
     } finally {
@@ -90,7 +90,7 @@ Deno.test('listCommand - --elements only', async () => {
     await listCommand(['--elements']);
 
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'Transferable Configuration Elements');
     assertStringIncludes(output, 'instructions');
@@ -106,7 +106,7 @@ Deno.test('listCommand - --mappings only', async () => {
     await listCommand(['--mappings']);
 
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'Platform Configuration File Mappings');
     assertStringIncludes(output, '.cursor/rules/*.mdc');
@@ -123,7 +123,7 @@ Deno.test('listCommand - multiple flags', async () => {
       await listCommand(['--platforms', '--detect']);
 
       const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-        '\n'
+        '\n',
       );
       assertStringIncludes(output, 'Supported Platforms');
       assertStringIncludes(output, 'Detected Platforms');

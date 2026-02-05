@@ -1,11 +1,11 @@
-import { assertEquals, assert, assertStringIncludes } from '@std/assert';
+import { assert, assertEquals, assertStringIncludes } from '@std/assert';
 import { CopilotHandler } from '../../src/platforms/copilot.ts';
 import {
+  createSampleConfig,
+  fixtureExists,
+  readFixture,
   withTempDir,
   writeFixture,
-  readFixture,
-  fixtureExists,
-  createSampleConfig,
 } from '../_test_helpers.ts';
 
 Deno.test('CopilotHandler - detect returns true when copilot-instructions.md exists', async () => {
@@ -32,7 +32,7 @@ Deno.test('CopilotHandler - export reads copilot-instructions.md', async () => {
     await writeFixture(
       dir,
       '.github/copilot-instructions.md',
-      'Copilot instructions'
+      'Copilot instructions',
     );
 
     const config = await handler.export();
@@ -52,7 +52,7 @@ Deno.test('CopilotHandler - export reads vscode settings with copilot/github key
     await writeFixture(
       dir,
       '.vscode/settings.json',
-      JSON.stringify(settings)
+      JSON.stringify(settings),
     );
 
     const config = await handler.export();
@@ -75,7 +75,7 @@ Deno.test('CopilotHandler - export skips vscode settings when no copilot keys', 
     await writeFixture(
       dir,
       '.vscode/settings.json',
-      JSON.stringify(settings)
+      JSON.stringify(settings),
     );
 
     const config = await handler.export();
@@ -132,7 +132,7 @@ Deno.test('CopilotHandler - import writes instructions (merge)', async () => {
     await writeFixture(
       dir,
       '.github/copilot-instructions.md',
-      'Existing content'
+      'Existing content',
     );
 
     const config = createSampleConfig({

@@ -52,7 +52,7 @@ export async function importCommand(args: string[]): Promise<void> {
   }
 
   console.log(
-    colors.bold(`\nImporting configuration to ${colors.cyan(options.to)}...\n`)
+    colors.bold(`\nImporting configuration to ${colors.cyan(options.to)}...\n`),
   );
 
   // Load configuration file
@@ -87,7 +87,9 @@ export async function importCommand(args: string[]): Promise<void> {
   await handler.import(config, options.merge);
 
   log.success(`Imported configuration to ${options.to}`);
-  console.log(colors.bold(colors.green('\n✓ Import completed successfully!\n')));
+  console.log(
+    colors.bold(colors.green('\n✓ Import completed successfully!\n')),
+  );
 }
 
 function printImportHelp(): void {

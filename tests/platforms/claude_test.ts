@@ -1,11 +1,11 @@
-import { assertEquals, assert, assertStringIncludes } from '@std/assert';
+import { assert, assertEquals, assertStringIncludes } from '@std/assert';
 import { ClaudeHandler } from '../../src/platforms/claude.ts';
 import {
+  createSampleConfig,
+  fixtureExists,
+  readFixture,
   withTempDir,
   writeFixture,
-  readFixture,
-  fixtureExists,
-  createSampleConfig,
 } from '../_test_helpers.ts';
 
 Deno.test('ClaudeHandler - detect returns true when .claude dir exists', async () => {
@@ -65,7 +65,7 @@ Deno.test('ClaudeHandler - export reads settings.json as context', async () => {
     await writeFixture(
       dir,
       '.claude/settings.json',
-      JSON.stringify(settings)
+      JSON.stringify(settings),
     );
 
     const config = await handler.export();

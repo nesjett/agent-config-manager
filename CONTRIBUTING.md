@@ -1,10 +1,12 @@
 # Contributing to Agent Setup Copier (ASC)
 
-Thanks for taking the time to contribute! This project is a Deno (2.x) CLI that transfers AI agent configuration between platforms.
+Thanks for taking the time to contribute! This project is a Deno (2.x) CLI that
+transfers AI agent configuration between platforms.
 
 ## Ways to contribute
 
-- **Bug reports**: include repro steps, expected vs actual behavior, and your OS.
+- **Bug reports**: include repro steps, expected vs actual behavior, and your
+  OS.
 - **Fixes**: small, focused PRs are easiest to review.
 - **New platforms**: add a platform handler under `src/platforms/`.
 - **New commands**: add a command implementation under `src/commands/`.
@@ -61,7 +63,8 @@ deno task build:all
 ## Project structure (high level)
 
 - `src/main.ts`: CLI entrypoint
-- `src/commands/`: command implementations (`copy`, `export`, `import`, `list`, `backup`)
+- `src/commands/`: command implementations (`copy`, `export`, `import`, `list`,
+  `backup`)
 - `src/platforms/`: platform adapters (how to read/write each platform’s config)
 - `src/utils/`: shared helpers (colors, git, etc.)
 - `src/types.ts`: shared types and config schema
@@ -70,10 +73,12 @@ deno task build:all
 
 1. Create a new handler in `src/platforms/<platform>.ts`.
 2. Export it from `src/platforms/mod.ts`.
-3. Update any platform type unions / validation in `src/types.ts` (and/or the command argument validation).
+3. Update any platform type unions / validation in `src/types.ts` (and/or the
+   command argument validation).
 4. Implement at least:
    - export (read platform config → normalized config)
-   - import (normalized config → platform files), supporting replace vs merge if applicable
+   - import (normalized config → platform files), supporting replace vs merge if
+     applicable
 5. Document the platform in the README Supported Platforms table.
 
 Design goals for platform handlers:
@@ -85,8 +90,10 @@ Design goals for platform handlers:
 ## Adding or changing commands
 
 - Commands live in `src/commands/` and are wired up via `src/commands/mod.ts`.
-- Keep flags consistent across commands (`--from`, `--to`, `--output`, `--merge`, `--dry-run` where applicable).
-- If you change CLI output, keep it readable and consistent with existing color conventions.
+- Keep flags consistent across commands (`--from`, `--to`, `--output`,
+  `--merge`, `--dry-run` where applicable).
+- If you change CLI output, keep it readable and consistent with existing color
+  conventions.
 
 ## Code style
 
@@ -97,7 +104,8 @@ Design goals for platform handlers:
 ## Testing expectations
 
 - Add or update tests when you change behavior.
-- Platform handlers should be tested with representative fixtures (minimal but realistic).
+- Platform handlers should be tested with representative fixtures (minimal but
+  realistic).
 
 ## Pull request guidelines
 
@@ -108,6 +116,8 @@ Design goals for platform handlers:
 
 ## Reporting security issues
 
-If you believe you’ve found a security issue (e.g., path traversal, unsafe file writes), please avoid opening a public issue.
+If you believe you’ve found a security issue (e.g., path traversal, unsafe file
+writes), please avoid opening a public issue.
 
-- Prefer reporting via GitHub Security Advisories, or contact the maintainer privately.
+- Prefer reporting via GitHub Security Advisories, or contact the maintainer
+  privately.

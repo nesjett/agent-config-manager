@@ -16,7 +16,9 @@ handlers.set('windsurf', new WindsurfHandler());
 /**
  * Get a platform handler by name
  */
-export function getPlatformHandler(platform: Platform): PlatformHandler | undefined {
+export function getPlatformHandler(
+  platform: Platform,
+): PlatformHandler | undefined {
   return handlers.get(platform);
 }
 

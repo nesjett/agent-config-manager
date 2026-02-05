@@ -74,7 +74,7 @@ export class CursorHandler extends BasePlatformHandler {
             command: server.command,
             args: server.args,
             env: server.env,
-          })
+          }),
         );
       }
     }
@@ -110,7 +110,7 @@ export class CursorHandler extends BasePlatformHandler {
 
       await Deno.writeTextFile(
         legacyRulesPath,
-        existingContent + config.config.instructions.join('\n\n')
+        existingContent + config.config.instructions.join('\n\n'),
       );
     }
 
@@ -124,7 +124,7 @@ export class CursorHandler extends BasePlatformHandler {
       if (merge && (await this.fileExists(mcpConfigPath))) {
         existingMcp =
           (await this.readJsonFile<{ mcpServers: Record<string, unknown> }>(
-            mcpConfigPath
+            mcpConfigPath,
           )) || existingMcp;
       }
 

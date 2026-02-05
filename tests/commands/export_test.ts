@@ -1,13 +1,13 @@
-import { assertEquals, assertStringIncludes, assertRejects } from '@std/assert';
+import { assertEquals, assertRejects, assertStringIncludes } from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { exportCommand } from '../../src/commands/export.ts';
 import {
-  withTempDir,
-  writeFixture,
+  ExitError,
   readFixture,
   spyConsole,
   stubExit,
-  ExitError,
+  withTempDir,
+  writeFixture,
 } from '../_test_helpers.ts';
 
 Deno.test('exportCommand - --help prints help', async () => {
@@ -111,7 +111,7 @@ Deno.test('exportCommand - --output write failure exits', async () => {
     try {
       await assertRejects(
         () => exportCommand(['cursor', '-o', '/bad/path/out.json']),
-        ExitError
+        ExitError,
       );
     } finally {
       exitStub.restore();

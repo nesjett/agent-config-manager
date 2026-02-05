@@ -1,13 +1,14 @@
-import { assertStringIncludes, assertRejects } from '@std/assert';
+import { assertRejects, assertStringIncludes } from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { main } from '../src/main.ts';
 import {
-  spyConsole,
-  stubExit,
-  stubArgs,
-  stubGitCheck,
   ExitError,
+  spyConsole,
+  stubArgs,
+  stubExit,
+  stubGitCheck,
 } from './_test_helpers.ts';
+import denoConfig from '../deno.json' with { type: 'json' };
 
 Deno.test('main - --version prints version', async () => {
   const argsStub = stubArgs(['--version']);
@@ -15,7 +16,10 @@ Deno.test('main - --version prints version', async () => {
   try {
     await main();
     assertSpyCalls(consoleSpy.log, 1);
-    assertStringIncludes(String(consoleSpy.log.calls[0].args[0]), '0.1.0');
+    assertStringIncludes(
+      String(consoleSpy.log.calls[0].args[0]),
+      denoConfig.version,
+    );
   } finally {
     argsStub.restore();
     consoleSpy.restore();
@@ -58,7 +62,7 @@ Deno.test('main - copy command routes correctly', async () => {
   try {
     await main();
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'Usage:');
     assertStringIncludes(output, 'asc copy');
@@ -75,7 +79,7 @@ Deno.test('main - export command routes', async () => {
   try {
     await main();
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'asc export');
   } finally {
@@ -91,7 +95,7 @@ Deno.test('main - import command routes (git check passes)', async () => {
   try {
     await main();
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'asc import');
   } finally {
@@ -133,7 +137,7 @@ Deno.test('main - list command routes', async () => {
   try {
     await main();
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'asc list');
   } finally {
@@ -148,7 +152,7 @@ Deno.test('main - backup command routes', async () => {
   try {
     await main();
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'asc backup');
   } finally {
@@ -163,7 +167,10 @@ Deno.test('main - unknown command exits', async () => {
   const consoleSpy = spyConsole();
   try {
     await assertRejects(() => main(), ExitError);
-    assertStringIncludes(String(consoleSpy.error.calls[0].args), 'Unknown command: foobar');
+    assertStringIncludes(
+      String(consoleSpy.error.calls[0].args),
+      'Unknown command: foobar',
+    );
   } finally {
     argsStub.restore();
     exitStub.restore();
@@ -177,7 +184,10 @@ Deno.test('main - -v alias for version', async () => {
   try {
     await main();
     assertSpyCalls(consoleSpy.log, 1);
-    assertStringIncludes(String(consoleSpy.log.calls[0].args[0]), '0.1.0');
+    assertStringIncludes(
+      String(consoleSpy.log.calls[0].args[0]),
+      denoConfig.version,
+    );
   } finally {
     argsStub.restore();
     consoleSpy.restore();
@@ -205,7 +215,7 @@ Deno.test('main - non-modifying commands skip git check', async () => {
     // No git stub needed - should work without git check
     await main();
     const output = consoleSpy.log.calls.map((c) => String(c.args[0])).join(
-      '\n'
+      '\n',
     );
     assertStringIncludes(output, 'asc list');
   } finally {

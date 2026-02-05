@@ -43,7 +43,9 @@ export async function backupCommand(args: string[]): Promise<void> {
     Deno.exit(1);
   }
 
-  console.log(colors.bold(`\nBacking up ${colors.cyan(platform)} configuration...\n`));
+  console.log(
+    colors.bold(`\nBacking up ${colors.cyan(platform)} configuration...\n`),
+  );
 
   // Check if platform is configured
   const detected = await handler.detect();
@@ -74,7 +76,9 @@ export async function backupCommand(args: string[]): Promise<void> {
     Deno.exit(1);
   }
 
-  console.log(colors.bold(colors.green('\n✓ Backup completed successfully!\n')));
+  console.log(
+    colors.bold(colors.green('\n✓ Backup completed successfully!\n')),
+  );
 }
 
 function printBackupHelp(): void {

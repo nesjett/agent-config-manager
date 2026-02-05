@@ -1,14 +1,14 @@
-import { assertStringIncludes, assertRejects, assertEquals } from '@std/assert';
+import { assertEquals, assertRejects, assertStringIncludes } from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { importCommand } from '../../src/commands/import.ts';
 import {
-  withTempDir,
-  writeFixture,
+  createSampleConfig,
+  ExitError,
   readFixture,
   spyConsole,
   stubExit,
-  ExitError,
-  createSampleConfig,
+  withTempDir,
+  writeFixture,
 } from '../_test_helpers.ts';
 
 Deno.test('importCommand - --help prints help', async () => {
@@ -49,7 +49,7 @@ Deno.test('importCommand - unknown platform exits', async () => {
     try {
       await assertRejects(
         () => importCommand([`${dir}/config.json`, '--to', 'unknown']),
-        ExitError
+        ExitError,
       );
     } finally {
       exitStub.restore();
@@ -135,7 +135,7 @@ Deno.test('importCommand - bad config file exits', async () => {
     try {
       await assertRejects(
         () => importCommand([`${dir}/nonexistent.json`, '--to', 'cursor']),
-        ExitError
+        ExitError,
       );
     } finally {
       exitStub.restore();
@@ -164,7 +164,7 @@ Deno.test('importCommand - --validate mode returns early', async () => {
       // Should NOT actually import (no .cursor dir should be created)
       const exists = await Deno.stat(`${dir}/.cursor`).then(
         () => true,
-        () => false
+        () => false,
       );
       assertEquals(exists, false);
     } finally {

@@ -8,8 +8,9 @@ import {
 } from './commands/mod.ts';
 import { colors } from './utils/colors.ts';
 import { checkGitRepositoryWithPrompt } from './utils/git.ts';
+import denoConfig from '../deno.json' with { type: 'json' };
 
-const VERSION = '0.1.0';
+const VERSION: string = denoConfig.version;
 
 const BANNER = `
 ${colors.bold(colors.cyan('Agent Setup Copier'))} ${colors.dim(`v${VERSION}`)}

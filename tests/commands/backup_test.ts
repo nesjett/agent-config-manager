@@ -1,14 +1,19 @@
-import { assertEquals, assert, assertStringIncludes, assertRejects } from '@std/assert';
+import {
+  assert,
+  assertEquals,
+  assertRejects,
+  assertStringIncludes,
+} from '@std/assert';
 import { assertSpyCalls } from '@std/testing/mock';
 import { backupCommand } from '../../src/commands/backup.ts';
 import {
-  withTempDir,
-  writeFixture,
-  readFixture,
+  ExitError,
   fixtureExists,
+  readFixture,
   spyConsole,
   stubExit,
-  ExitError,
+  withTempDir,
+  writeFixture,
 } from '../_test_helpers.ts';
 
 Deno.test('backupCommand - --help prints help', async () => {
@@ -82,12 +87,19 @@ Deno.test('backupCommand - --timestamp adds timestamp to filename', async () => 
     const consoleSpy = spyConsole();
     try {
       // Use a base filename that includes the dir path
-      await backupCommand(['cursor', '--timestamp', '--output', `${dir}/cursor-backup.json`]);
+      await backupCommand([
+        'cursor',
+        '--timestamp',
+        '--output',
+        `${dir}/cursor-backup.json`,
+      ]);
 
       // Find the backup file with timestamp in the temp dir
       const files = [];
       for await (const entry of Deno.readDir(dir)) {
-        if (entry.name.startsWith('cursor-backup') && entry.name.endsWith('.json')) {
+        if (
+          entry.name.startsWith('cursor-backup') && entry.name.endsWith('.json')
+        ) {
           files.push(entry.name);
         }
       }
@@ -125,7 +137,7 @@ Deno.test('backupCommand - write failure exits', async () => {
     try {
       await assertRejects(
         () => backupCommand(['cursor', '--output', '/bad/dir/file.json']),
-        ExitError
+        ExitError,
       );
     } finally {
       exitStub.restore();

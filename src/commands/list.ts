@@ -23,7 +23,8 @@ export async function listCommand(args: string[]): Promise<void> {
   }
 
   // If no specific flag, show all
-  const showAll = !parsed.platforms && !parsed.elements && !parsed.mappings && !parsed.detect;
+  const showAll = !parsed.platforms && !parsed.elements && !parsed.mappings &&
+    !parsed.detect;
 
   if (showAll || parsed.platforms) {
     console.log(colors.bold('\nSupported Platforms:\n'));
@@ -47,11 +48,17 @@ export async function listCommand(args: string[]): Promise<void> {
   if (showAll || parsed.elements) {
     console.log(colors.bold('\nTransferable Configuration Elements:\n'));
     const elements = [
-      { name: 'instructions', desc: 'System prompts and instructions (CLAUDE.md, .cursorrules, etc.)' },
+      {
+        name: 'instructions',
+        desc: 'System prompts and instructions (CLAUDE.md, .cursorrules, etc.)',
+      },
       { name: 'rules', desc: 'Platform-specific rules and constraints' },
       { name: 'skills', desc: 'Custom commands and skills' },
       { name: 'tools', desc: 'Tool configurations and integrations' },
-      { name: 'mcpServers', desc: 'Model Context Protocol server configurations' },
+      {
+        name: 'mcpServers',
+        desc: 'Model Context Protocol server configurations',
+      },
       { name: 'context', desc: 'Additional context and settings' },
       { name: 'shortcuts', desc: 'Keyboard shortcuts and hotkeys' },
     ];
@@ -64,8 +71,14 @@ export async function listCommand(args: string[]): Promise<void> {
   if (showAll || parsed.mappings) {
     console.log(colors.bold('\nPlatform Configuration File Mappings:\n'));
     const mappings = [
-      { platform: 'cursor', files: ['.cursor/rules/*.mdc', '.cursorrules', '.cursor/mcp.json'] },
-      { platform: 'claude', files: ['CLAUDE.md', '.claude/commands/*.md', '.claude/mcp.json'] },
+      {
+        platform: 'cursor',
+        files: ['.cursor/rules/*.mdc', '.cursorrules', '.cursor/mcp.json'],
+      },
+      {
+        platform: 'claude',
+        files: ['CLAUDE.md', '.claude/commands/*.md', '.claude/mcp.json'],
+      },
       { platform: 'copilot', files: ['.github/copilot-instructions.md'] },
       { platform: 'windsurf', files: ['.windsurfrules', '.windsurf/mcp.json'] },
     ];

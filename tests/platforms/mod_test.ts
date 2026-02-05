@@ -1,12 +1,12 @@
-import { assertEquals, assert } from '@std/assert';
+import { assert, assertEquals } from '@std/assert';
 import {
-  getPlatformHandler,
-  getAllPlatformHandlers,
-  getSupportedPlatforms,
-  detectPlatforms,
   ClaudeHandler,
   CopilotHandler,
   CursorHandler,
+  detectPlatforms,
+  getAllPlatformHandlers,
+  getPlatformHandler,
+  getSupportedPlatforms,
   WindsurfHandler,
 } from '../../src/platforms/mod.ts';
 import { withTempDir, writeFixture } from '../_test_helpers.ts';

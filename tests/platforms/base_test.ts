@@ -1,4 +1,4 @@
-import { assertEquals, assert, assertRejects } from '@std/assert';
+import { assert, assertEquals, assertRejects } from '@std/assert';
 import { BasePlatformHandler } from '../../src/platforms/base.ts';
 import type { AgentConfig, Platform } from '../../src/types.ts';
 import { withTempDir, writeFixture } from '../_test_helpers.ts';
@@ -94,7 +94,7 @@ Deno.test('BasePlatformHandler - readJsonFile returns parsed JSON for valid file
     await writeFixture(dir, 'data.json', JSON.stringify({ key: 'value' }));
 
     const result = await handler.testReadJsonFile<{ key: string }>(
-      `${dir}/data.json`
+      `${dir}/data.json`,
     );
     assertEquals(result, { key: 'value' });
   });
@@ -164,7 +164,7 @@ Deno.test('BasePlatformHandler - ensureDir rethrows non-AlreadyExists errors', a
 
     await assertRejects(
       async () => await handler.testEnsureDir(`${dir}/file.txt/subdir`),
-      Error
+      Error,
     );
   });
 });

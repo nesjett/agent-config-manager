@@ -8,7 +8,7 @@ import { join } from '@std/path';
  * Automatically cleans up after the test.
  */
 export async function withTempDir(
-  fn: (dir: string) => Promise<void>
+  fn: (dir: string) => Promise<void>,
 ): Promise<void> {
   const dir = await Deno.makeTempDir({ prefix: 'asc_test_' });
   const cwdStub = stub(Deno, 'cwd', () => dir);
@@ -80,7 +80,7 @@ export function spyConsole(): ConsoleSpy {
  * Creates a sample AgentConfig for testing
  */
 export function createSampleConfig(
-  overrides?: Partial<AgentConfig>
+  overrides?: Partial<AgentConfig>,
 ): AgentConfig {
   return {
     version: '1.0.0',
@@ -113,7 +113,7 @@ export function createSampleConfig(
 export async function writeFixture(
   dir: string,
   path: string,
-  content: string
+  content: string,
 ): Promise<void> {
   const fullPath = join(dir, path);
   const parentDir = fullPath.substring(0, fullPath.lastIndexOf('/'));
@@ -130,7 +130,7 @@ export async function writeFixture(
  */
 export async function readFixture(
   dir: string,
-  path: string
+  path: string,
 ): Promise<string> {
   return await Deno.readTextFile(join(dir, path));
 }
@@ -140,7 +140,7 @@ export async function readFixture(
  */
 export async function fixtureExists(
   dir: string,
-  path: string
+  path: string,
 ): Promise<boolean> {
   try {
     await Deno.stat(join(dir, path));
@@ -160,7 +160,7 @@ export function stubGitCheck(result: boolean) {
     () =>
       ({
         output: () => Promise.resolve({ success: result }),
-      }) as unknown as Deno.Command
+      }) as unknown as Deno.Command,
   );
 }
 

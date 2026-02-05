@@ -20,7 +20,7 @@ export class ClaudeHandler extends BasePlatformHandler {
   async detect(): Promise<boolean> {
     const claudeDir = await this.fileExists(this.getConfigPath());
     const claudeMd = await this.fileExists(
-      join(this.getRootPath(), 'CLAUDE.md')
+      join(this.getRootPath(), 'CLAUDE.md'),
     );
     return claudeDir || claudeMd;
   }
@@ -40,7 +40,7 @@ export class ClaudeHandler extends BasePlatformHandler {
     const settingsPath = join(claudeDir, 'settings.json');
     if (await this.fileExists(settingsPath)) {
       const settings = await this.readJsonFile<Record<string, unknown>>(
-        settingsPath
+        settingsPath,
       );
       if (settings) {
         config.config.context = { ...config.config.context, settings };
@@ -63,7 +63,7 @@ export class ClaudeHandler extends BasePlatformHandler {
             command: server.command,
             args: server.args,
             env: server.env,
-          })
+          }),
         );
       }
     }
@@ -111,7 +111,7 @@ export class ClaudeHandler extends BasePlatformHandler {
 
       await Deno.writeTextFile(
         claudeMdPath,
-        existingContent + config.config.instructions.join('\n\n')
+        existingContent + config.config.instructions.join('\n\n'),
       );
     }
 
@@ -125,7 +125,7 @@ export class ClaudeHandler extends BasePlatformHandler {
       if (merge && (await this.fileExists(mcpConfigPath))) {
         existingMcp =
           (await this.readJsonFile<{ mcpServers: Record<string, unknown> }>(
-            mcpConfigPath
+            mcpConfigPath,
           )) || existingMcp;
       }
 

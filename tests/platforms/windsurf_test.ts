@@ -1,11 +1,11 @@
-import { assertEquals, assert, assertStringIncludes } from '@std/assert';
+import { assert, assertEquals, assertStringIncludes } from '@std/assert';
 import { WindsurfHandler } from '../../src/platforms/windsurf.ts';
 import {
+  createSampleConfig,
+  fixtureExists,
+  readFixture,
   withTempDir,
   writeFixture,
-  readFixture,
-  fixtureExists,
-  createSampleConfig,
 } from '../_test_helpers.ts';
 
 Deno.test('WindsurfHandler - detect returns true when .windsurfrules exists', async () => {
@@ -65,7 +65,7 @@ Deno.test('WindsurfHandler - export reads cascade.json as context', async () => 
     await writeFixture(
       dir,
       '.windsurf/cascade.json',
-      JSON.stringify(cascade)
+      JSON.stringify(cascade),
     );
 
     const config = await handler.export();

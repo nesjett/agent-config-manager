@@ -44,7 +44,9 @@ export async function exportCommand(args: string[]): Promise<void> {
     Deno.exit(1);
   }
 
-  console.log(colors.bold(`\nExporting configuration from ${colors.cyan(platform)}...\n`));
+  console.log(
+    colors.bold(`\nExporting configuration from ${colors.cyan(platform)}...\n`),
+  );
 
   // Check if platform is configured
   const detected = await handler.detect();
