@@ -33,13 +33,19 @@
   },
   "fmt": {
     "indentWidth": 2,
-    "singleQuote": true
+    "singleQuote": true,
+    "exclude": [
+      "CHANGELOG.md"
+    ]
   },
   "lint": {
     "rules": {
       "tags": [
         "recommended"
       ]
-    }
+    },
+    "exclude": [
+      "CHANGELOG.md"
+    ]
   }
 }
